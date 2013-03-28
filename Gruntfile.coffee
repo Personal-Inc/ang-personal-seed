@@ -8,7 +8,8 @@ folderMount = (connect, point) ->
 module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON 'package.json'
-    
+    cfg: grunt.file.readYAML 'grunt-config.yml'
+
     clean:
       production: ['_prod_public']
 
@@ -233,11 +234,29 @@ module.exports = (grunt) ->
 
   
   ### CUSTOM TASKS ###
-  grunt.registerTask 'lint', ['coffeelint']
-  grunt.registerTask 'build:dev', ['lint', 'coffee:development', 'concat', 'less:development', 'jade:development', 'copy:development', 'replace:development']
+  grunt.registerTask 'lint', [
+    'coffeelint'
+  ]
+  grunt.registerTask 'build:dev', [
+    'lint'
+    'coffee:development'
+    'concat'
+    'less:development'
+    'jade:development'
+    'copy:development'
+    'replace:development'
+  ]
   grunt.registerTask 'build:prod', ['lint', 'clean:production', 'coffee:production', 'less:production', 'jade:production', 'copy:production', 'imagemin:production', 'uglify:production', 'cssmin:production', 'replace:production'] #TODO: minhtml and cache-bust
   #TODO: grunt.registerTask 'test', []
-  grunt.registerTask 'default', ['build:dev', 'livereload-start', 'connect:livereload', 'regarde']
-  grunt.registerTask 'prodweb', ['connect:production', 'regarde']
+  grunt.registerTask 'default', [
+    'build:dev'
+    'livereload-start'
+    'connect:livereload'
+    'regarde'
+  ]
+  grunt.registerTask 'prodweb', [
+    'connect:production'
+    'regarde'
+  ]
 
   # TODO: Task (possibly custom) to add cache busting sigs to files
