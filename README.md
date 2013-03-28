@@ -17,4 +17,4 @@ First, this Gruntfile can totally be used in Yeoman generators, but is sufficien
 
 __Why not just use brunch?__
 
-Brunch is really cool, but the biggest reason is probably [this](https://github.com/brunch/brunch/issues/401).  And generally I feel Grunt has a larger community (so more plugins) and more flexibility for unanticipated needs.
+Brunch is really cool, but the biggest reason is probably [this](https://github.com/brunch/brunch/issues/401).  And generally Grunt has a larger community (so more plugins) and more flexibility for unanticipated needs.
