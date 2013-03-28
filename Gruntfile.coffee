@@ -11,7 +11,7 @@ module.exports = (grunt) ->
     cfg: grunt.file.readYAML 'grunt-config.yml'
 
     clean:
-      production: ['_prod_public']
+      production: ['<%%= cfg.outdir.prod %>']
 
     version:
       pkgfiles:
@@ -31,48 +31,27 @@ module.exports = (grunt) ->
     coffee:
       development:
         files:
-          '_dev_public/js/app-<%= pkg.version %>.js': ['app/**/*.coffee']
-          #'test/<%= pkg.name %>-tests.js': ['test/*Spec.coffee']
-      # glob_to_multiple:
-      #   expand: true
-      #   cwd: 'app/'
-      #   src: ['*.coffee']
-      #   dest: '_dev_public/js/'
-      #   ext: '.js'
+          '<%%= cfg.outdir.dev %>/js/app-<%= pkg.version %>.js': ['app/**/*.coffee']
       production:
         files:
-          '_prod_public/js/app.js': ['app/**/*.coffee']
+          '<%%= cfg.outdir.prod %>/js/app.js': ['app/**/*.coffee']
     
     concat:
       vendor: #TODO: replace with include (from json, yaml, or `bower list`)
-        dest: '_dev_public/js/vendor-<%= pkg.version %>.js'
-        src: [
-          'components/jquery/jquery.js'
-          'components/angular/angular.js'
-          'components/angular-resource/angular-resource.js'
-          'components/angular-cookies/angular-cookies.js'
-          'components/angular-piwik/angular-piwik.js'
-          'components/jquery-file-upload/js/vendor/jquery.ui.widget.js'
-          'components/jquery-file-upload/js/jquery.iframe-transport.js'
-          'components/jquery-file-upload/js/jquery.fileupload.js'
-          'components/angular-personal/dist/angular-personal-complete.js'
-          #'../../angular-personal/dist/angular-personal-complete.js'
-          'components/uri.js/src/URI.js'
-          'components/bootstrap/js/bootstrap-tooltip.js'
-          'components/bootstrap/js/bootstrap-popover.js'
-        ]
+        dest: '<%%= cfg.outdir.dev %>/js/vendor-<%= pkg.version %>.js'
+        src: <%%= cfg.src.js.vendor %>
 
     less:
       development:
         options:
           paths: ['app/styles', 'components']
         files: 
-          '_dev_public/css/app-<%= pkg.version %>.css': 'app/styles/app.less'
+          '<%%= cfg.outdir.dev %>/css/app-<%= pkg.version %>.css': 'app/styles/app.less'
       production:
         options:
           paths: ['app/styles', 'components']
         files: 
-          '_prod_public/css/app.css': 'app/styles/app.less'
+          '<%%= cfg.outdir.prod %>/css/app.css': 'app/styles/app.less'
 
     jade:
       development:
@@ -82,7 +61,7 @@ module.exports = (grunt) ->
           expand: true
           cwd: 'app/'
           src: ['**/*.jade']
-          dest: '_dev_public/'
+          dest: '<%%= cfg.outdir.dev %>/'
           ext: '.html'
         ]
       production:
@@ -90,19 +69,19 @@ module.exports = (grunt) ->
           expand: true
           cwd: 'app/'
           src: ['**/*.jade']
-          dest: '_prod_public/'
+          dest: '<%%= cfg.outdir.prod %>'
           ext: '.html'
         ]
 
     copy:
       development:
         files: [ 
-          { expand: yes, cwd: 'app/font/', src: ['**'], dest: '_dev_public/font/' }
-          { expand: yes, cwd: 'app/images/', src: ['**'], dest: '_dev_public/images/' }
+          { expand: yes, cwd: 'app/font/', src: ['**'], dest: '<%%= cfg.outdir.dev %>/font/' }
+          { expand: yes, cwd: 'app/images/', src: ['**'], dest: '<%%= cfg.outdir.dev %>/images/' }
         ]
       production:
         files: [
-          { expand: yes, cwd: 'app/font/', src: ['**'], dest: '_prod_public/font/' }
+          { expand: yes, cwd: 'app/font/', src: ['**'], dest: '<%%= cfg.outdir.prod %>/font/' }
         ]
 
     imagemin:
@@ -110,7 +89,7 @@ module.exports = (grunt) ->
         options:
           optimizationLevel: 7
         files: [
-          { expand: yes, cwd: 'app/images/', src: ['**'], dest: '_prod_public/images/' }
+          { expand: yes, cwd: 'app/images/', src: ['**'], dest: '<%%= cfg.outdir.prod %>/images/' }
         ]
 
     uglify:
@@ -119,27 +98,13 @@ module.exports = (grunt) ->
           except: ['jQuery', 'angular', 'URI']
       production:
         files:
-          '_prod_public/js/app-<%= pkg.version %>.js': ['_prod_public/js/app.js']
-          '_prod_public/js/vendor-<%= pkg.version %>.js': [
-            'components/jquery/jquery.js'
-            'components/angular/angular.js'
-            'components/angular-resource/angular-resource.js'
-            'components/angular-cookies/angular-cookies.js'
-            'components/angular-piwik/angular-piwik.js'
-            'components/jquery-file-upload/js/vendor/jquery.ui.widget.js'
-            'components/jquery-file-upload/js/jquery.iframe-transport.js'
-            'components/jquery-file-upload/js/jquery.fileupload.js'
-            'components/angular-personal/dist/angular-personal-complete.js'
-            #'../../angular-personal/dist/angular-personal-complete.js'
-            'components/uri.js/src/URI.js'
-            'components/bootstrap/js/bootstrap-tooltip.js'
-            'components/bootstrap/js/bootstrap-popover.js'
-          ]
+          '<%%= cfg.outdir.prod %>/js/app-<%= pkg.version %>.js': ['<%%= cfg.outdir.prod %>/js/app.js']
+          '<%%= cfg.outdir.prod %>/js/vendor-<%= pkg.version %>.js': <%%= cfg.src.js.vendor %>
 
     cssmin:
       production:
         files:
-          '_prod_public/css/app-<%= pkg.version %>.css': ['_prod_public/css/app.css']
+          '<%%= cfg.outdir.prod %>/css/app-<%= pkg.version %>.css': ['<%%= cfg.outdir.prod %>/css/app.css']
 
     replace:
       development:
@@ -147,14 +112,14 @@ module.exports = (grunt) ->
           variables:
             'version': '<%= pkg.version %>'
         files: [
-          {src: ['_dev_public/index.html'], dest: '_dev_public/index.html'}
+          {src: ['<%%= cfg.outdir.dev %>/index.html'], dest: '<%%= cfg.outdir.dev %>/index.html'}
         ]
       production:
         options:
           variables:
             'version': '<%= pkg.version %>'
         files: [
-          {src: ['_prod_public/index.html'], dest: '_prod_public/index.html'}
+          {src: ['<%%= cfg.outdir.prod %>/index.html'], dest: '<%%= cfg.outdir.prod %>/index.html'}
         ]
 
     testacular:
@@ -177,13 +142,13 @@ module.exports = (grunt) ->
           port: 3333
           hostname: '0.0.0.0'
           middleware: (connect, options) ->
-            [lrsnippet, folderMount(connect, './_dev_public')]
+            [lrsnippet, folderMount(connect, './<%%= cfg.outdir.dev %>')]
       production:
         options:
           port: 3333
           hostname: '0.0.0.0'
           middleware: (connect, options) ->
-            [folderMount(connect, './_prod_public')]
+            [folderMount(connect, './<%%= cfg.outdir.prod %>')]
 
     regarde: #TODO: make this taks immune to errors in subtasks
       buildcss:
@@ -193,13 +158,13 @@ module.exports = (grunt) ->
         files: ['app/**', '!app/**/*.less', '!app/**/*.sass', '!app/**/*.scss']
         tasks: ['lint', 'build:dev']
       js:
-        files: '_dev_public/**/*.js'
+        files: '<%%= cfg.outdir.dev %>/**/*.js'
         tasks: ['livereload']
       css:
-        files: '_dev_public/**/*.css'
+        files: '<%%= cfg.outdir.dev %>/**/*.css'
         tasks: ['livereload']
       html:
-        files: '_dev_public/**/*.html'
+        files: '<%%= cfg.outdir.dev %>/**/*.html'
         tasks: ['livereload']
 
 

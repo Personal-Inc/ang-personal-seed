@@ -19,4 +19,9 @@ src: #Order and location of source files
       - components/uri.js/src/URI.js
       - components/bootstrap/js/bootstrap-tooltip.js
       - components/bootstrap/js/bootstrap-popover.js
+
+nomangle: #keywords to except from minifiers
+  - jQuery
+  - angular
+  - URI
 ...
