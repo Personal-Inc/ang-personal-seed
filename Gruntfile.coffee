@@ -13,6 +13,12 @@ module.exports = (grunt) ->
     clean:
       production: ['_prod_public']
 
+    version:
+      pkgfiles:
+        src: ['package.json']
+      compfiles:
+        src: ['component.json']
+
     coffeelint:
       app: ['app/**/*.coffee']
       # tests: 
@@ -198,8 +204,9 @@ module.exports = (grunt) ->
 
 
   ### Vendor Tasks ###
-  #Prep
+  #Prep & Admin
   grunt.loadNpmTasks 'grunt-contrib-clean'
+  grunt.loadNpmTasks 'grunt-version'
 
   # Linting
   grunt.loadNpmTasks 'grunt-coffeelint'
@@ -220,15 +227,13 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-cssmin'
   grunt.loadNpmTasks 'grunt-contrib-htmlmin'
   grunt.loadNpmTasks 'grunt-contrib-imagemin'
-  #grunt.loadNpmTasks 'grunt-contrib-compress'
+  grunt.loadNpmTasks 'grunt-contrib-compress'
 
   #cache bust
   grunt.loadNpmTasks 'grunt-replace'
 
-  # Static Server (Dev)
+  # Static Server & LiveReload (Dev)
   grunt.loadNpmTasks 'grunt-contrib-connect'
-
-  # LiveReload (Dev)
   grunt.loadNpmTasks 'grunt-regarde'
   grunt.loadNpmTasks 'grunt-contrib-livereload'
 
