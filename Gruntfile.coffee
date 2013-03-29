@@ -11,7 +11,7 @@ module.exports = (grunt) ->
     cfg: grunt.file.readYAML 'grunt-config.yml'
 
     clean:
-      production: ['<%%= cfg.outdir.prod %>']
+      production: ['<%= cfg.outdir.prod %>']
 
     version:
       pkgfiles:
@@ -31,27 +31,27 @@ module.exports = (grunt) ->
     coffee:
       development:
         files:
-          '<%%= cfg.outdir.dev %>/js/app-<%= pkg.version %>.js': ['app/**/*.coffee']
+          '<%= cfg.outdir.dev %>/js/app-<%= pkg.version %>.js': ['app/**/*.coffee']
       production:
         files:
-          '<%%= cfg.outdir.prod %>/js/app.js': ['app/**/*.coffee']
+          '<%= cfg.outdir.prod %>/js/app.js': ['app/**/*.coffee']
     
     concat:
       vendor: #TODO: replace with include (from json, yaml, or `bower list`)
-        dest: '<%%= cfg.outdir.dev %>/js/vendor-<%= pkg.version %>.js'
-        src: <%%= cfg.src.js.vendor %>
+        dest: '<%= cfg.outdir.dev %>/js/vendor-<%= pkg.version %>.js'
+        src: '<%= cfg.src.js.vendor %>'
 
     less:
       development:
         options:
           paths: ['app/styles', 'components']
         files: 
-          '<%%= cfg.outdir.dev %>/css/app-<%= pkg.version %>.css': 'app/styles/app.less'
+          '<%= cfg.outdir.dev %>/css/app-<%= pkg.version %>.css': 'app/styles/app.less'
       production:
         options:
           paths: ['app/styles', 'components']
         files: 
-          '<%%= cfg.outdir.prod %>/css/app.css': 'app/styles/app.less'
+          '<%= cfg.outdir.prod %>/css/app.css': 'app/styles/app.less'
 
     jade:
       development:
@@ -61,7 +61,7 @@ module.exports = (grunt) ->
           expand: true
           cwd: 'app/'
           src: ['**/*.jade']
-          dest: '<%%= cfg.outdir.dev %>/'
+          dest: '<%= cfg.outdir.dev %>/'
           ext: '.html'
         ]
       production:
@@ -69,19 +69,19 @@ module.exports = (grunt) ->
           expand: true
           cwd: 'app/'
           src: ['**/*.jade']
-          dest: '<%%= cfg.outdir.prod %>'
+          dest: '<%= cfg.outdir.prod %>'
           ext: '.html'
         ]
 
     copy:
       development:
         files: [ 
-          { expand: yes, cwd: 'app/font/', src: ['**'], dest: '<%%= cfg.outdir.dev %>/font/' }
-          { expand: yes, cwd: 'app/images/', src: ['**'], dest: '<%%= cfg.outdir.dev %>/images/' }
+          { expand: yes, cwd: 'app/font/', src: ['**'], dest: '<%= cfg.outdir.dev %>/font/' }
+          { expand: yes, cwd: 'app/images/', src: ['**'], dest: '<%= cfg.outdir.dev %>/images/' }
         ]
       production:
         files: [
-          { expand: yes, cwd: 'app/font/', src: ['**'], dest: '<%%= cfg.outdir.prod %>/font/' }
+          { expand: yes, cwd: 'app/font/', src: ['**'], dest: '<%= cfg.outdir.prod %>/font/' }
         ]
 
     imagemin:
@@ -89,22 +89,22 @@ module.exports = (grunt) ->
         options:
           optimizationLevel: 7
         files: [
-          { expand: yes, cwd: 'app/images/', src: ['**'], dest: '<%%= cfg.outdir.prod %>/images/' }
+          { expand: yes, cwd: 'app/images/', src: ['**'], dest: '<%= cfg.outdir.prod %>/images/' }
         ]
 
     uglify:
       options:
         mangle:
-          except: <%%= cfg.nomangle %>
+          except: '<%= cfg.nomangle %>'
       production:
         files:
-          '<%%= cfg.outdir.prod %>/js/app-<%= pkg.version %>.js': ['<%%= cfg.outdir.prod %>/js/app.js']
-          '<%%= cfg.outdir.prod %>/js/vendor-<%= pkg.version %>.js': <%%= cfg.src.js.vendor %>
+          '<%= cfg.outdir.prod %>/js/app-<%= pkg.version %>.js': ['<%= cfg.outdir.prod %>/js/app.js']
+          '<%= cfg.outdir.prod %>/js/vendor-<%= pkg.version %>.js': '<%= cfg.src.js.vendor %>'
 
     cssmin:
       production:
         files:
-          '<%%= cfg.outdir.prod %>/css/app-<%= pkg.version %>.css': ['<%%= cfg.outdir.prod %>/css/app.css']
+          '<%= cfg.outdir.prod %>/css/app-<%= pkg.version %>.css': ['<%= cfg.outdir.prod %>/css/app.css']
 
     replace:
       development:
@@ -112,14 +112,14 @@ module.exports = (grunt) ->
           variables:
             'version': '<%= pkg.version %>'
         files: [
-          {src: ['<%%= cfg.outdir.dev %>/index.html'], dest: '<%%= cfg.outdir.dev %>/index.html'}
+          {src: ['<%= cfg.outdir.dev %>/index.html'], dest: '<%= cfg.outdir.dev %>/index.html'}
         ]
       production:
         options:
           variables:
             'version': '<%= pkg.version %>'
         files: [
-          {src: ['<%%= cfg.outdir.prod %>/index.html'], dest: '<%%= cfg.outdir.prod %>/index.html'}
+          {src: ['<%= cfg.outdir.prod %>/index.html'], dest: '<%= cfg.outdir.prod %>/index.html'}
         ]
 
     testacular:
@@ -142,13 +142,13 @@ module.exports = (grunt) ->
           port: 3333
           hostname: '0.0.0.0'
           middleware: (connect, options) ->
-            [lrsnippet, folderMount(connect, './<%%= cfg.outdir.dev %>')]
+            [lrsnippet, folderMount(connect, './<%= cfg.outdir.dev %>')]
       production:
         options:
           port: 3333
           hostname: '0.0.0.0'
           middleware: (connect, options) ->
-            [folderMount(connect, './<%%= cfg.outdir.prod %>')]
+            [folderMount(connect, './<%= cfg.outdir.prod %>')]
 
     regarde: #TODO: make this taks immune to errors in subtasks
       buildcss:
@@ -158,13 +158,13 @@ module.exports = (grunt) ->
         files: ['app/**', '!app/**/*.less', '!app/**/*.sass', '!app/**/*.scss']
         tasks: ['lint', 'build:dev']
       js:
-        files: '<%%= cfg.outdir.dev %>/**/*.js'
+        files: '<%= cfg.outdir.dev %>/**/*.js'
         tasks: ['livereload']
       css:
-        files: '<%%= cfg.outdir.dev %>/**/*.css'
+        files: '<%= cfg.outdir.dev %>/**/*.css'
         tasks: ['livereload']
       html:
-        files: '<%%= cfg.outdir.dev %>/**/*.html'
+        files: '<%= cfg.outdir.dev %>/**/*.html'
         tasks: ['livereload']
 
 
