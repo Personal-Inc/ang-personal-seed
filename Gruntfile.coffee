@@ -95,7 +95,7 @@ module.exports = (grunt) ->
     uglify:
       options:
         mangle:
-          except: ['jQuery', 'angular', 'URI']
+          except: <%%= cfg.nomangle %>
       production:
         files:
           '<%%= cfg.outdir.prod %>/js/app-<%= pkg.version %>.js': ['<%%= cfg.outdir.prod %>/js/app.js']
@@ -216,7 +216,18 @@ module.exports = (grunt) ->
     'copy:development'
     'replace:development'
   ]
-  grunt.registerTask 'build:prod', ['lint', 'clean:production', 'coffee:production', 'less:production', 'jade:production', 'copy:production', 'imagemin:production', 'uglify:production', 'cssmin:production', 'replace:production'] #TODO: minhtml and cache-bust
+  grunt.registerTask 'build:prod', [
+    'lint'
+    'clean:production'
+    'coffee:production'
+    'less:production'
+    'jade:production'
+    'copy:production'
+    'imagemin:production'
+    'uglify:production'
+    'cssmin:production'
+    'replace:production'
+  ]
   #TODO: grunt.registerTask 'test', []
   grunt.registerTask 'default', [
     'build:dev'
