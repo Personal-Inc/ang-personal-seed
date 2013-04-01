@@ -1,5 +1,7 @@
 'use strict'
+require 'js-yaml'
 path = require 'path'
+cfg = require './grunt-config.yml'
 lrsnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet
 
 folderMount = (connect, point) ->
@@ -23,7 +25,7 @@ module.exports = (grunt) ->
       app: ['app/**/*.coffee']
       # tests: 
       #   files:
-      #     src: ['test/*.coffee']
+      #     src: ['test/**/*.coffee']
       options:
         no_trailing_whitespaces:
           level: 'error'
@@ -37,7 +39,7 @@ module.exports = (grunt) ->
           '<%= cfg.outdir.prod %>/js/app.js': ['app/**/*.coffee']
     
     concat:
-      vendor: #TODO: replace with include (from json, yaml, or `bower list`)
+      vendor:
         dest: '<%= cfg.outdir.dev %>/js/vendor-<%= pkg.version %>.js'
         src: '<%= cfg.src.js.vendor %>'
 
@@ -142,13 +144,13 @@ module.exports = (grunt) ->
           port: 3333
           hostname: '0.0.0.0'
           middleware: (connect, options) ->
-            [lrsnippet, folderMount(connect, './_dev_public')]
+            [lrsnippet, folderMount(connect, "./#{cfg.outdir.dev}")]
       production:
         options:
           port: 3333
           hostname: '0.0.0.0'
           middleware: (connect, options) ->
-            [folderMount(connect, './<%= cfg.outdir.prod %>')]
+            [folderMount(connect, "./#{cfg.outdir.prod}")]
 
     regarde: #TODO: make this taks immune to errors in subtasks
       buildcss:
