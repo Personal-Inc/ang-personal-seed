@@ -7,9 +7,13 @@ src: #Order and location of source files
   js:
     vendor: 
       - components/jquery/jquery.js
+      - components/angular/angular.js
+      - components/angular-resource/angular-resource.js
+      - components/angular-cookies/angular-cookies.js
       - components/bootstrap/js/bootstrap-tooltip.js
       - components/bootstrap/js/bootstrap-popover.js
 
 nomangle: #keywords to except from minifiers
   - jQuery
+  - angular
 ...
