@@ -142,7 +142,7 @@ module.exports = (grunt) ->
           port: 3333
           hostname: '0.0.0.0'
           middleware: (connect, options) ->
-            [lrsnippet, folderMount(connect, './<%= cfg.outdir.dev %>')]
+            [lrsnippet, folderMount(connect, './_dev_public')]
       production:
         options:
           port: 3333

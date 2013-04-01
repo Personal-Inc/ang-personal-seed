@@ -7,21 +7,9 @@ src: #Order and location of source files
   js:
     vendor: 
       - components/jquery/jquery.js
-      - components/angular/angular.js
-      - components/angular-resource/angular-resource.js
-      - components/angular-cookies/angular-cookies.js
-      - components/angular-piwik/angular-piwik.js
-      - components/jquery-file-upload/js/vendor/jquery.ui.widget.js
-      - components/jquery-file-upload/js/jquery.iframe-transport.js
-      - components/jquery-file-upload/js/jquery.fileupload.js
-      - components/angular-personal/dist/angular-personal-complete.js
-      # - ../../angular-personal/dist/angular-personal-complete.js
-      - components/uri.js/src/URI.js
       - components/bootstrap/js/bootstrap-tooltip.js
       - components/bootstrap/js/bootstrap-popover.js
 
 nomangle: #keywords to except from minifiers
   - jQuery
-  - angular
-  - URI
 ...
