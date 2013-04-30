@@ -37,6 +37,7 @@
     "grunt-contrib-jshint": "~0.3.0",
     "grunt-testacular": "~0.3.0",
     "grunt-contrib-imagemin": "~0.1.2",
-    "grunt-version": "~0.2.1"
+    "grunt-version": "~0.2.1",
+    "js-yaml": "~2.0.5"
   }
 }
