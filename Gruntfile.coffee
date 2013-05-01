@@ -154,11 +154,11 @@ module.exports = (grunt) ->
 
     regarde: #TODO: make this taks immune to errors in subtasks
       buildcss:
-        files: ['app/**/*.less', 'app/**/*.sass', 'app/**/*.scss']
+        files: ['app/**/*.{less,sass,scss}']
         tasks: ['less:development'] #TODO: add SASS, Compass, and copy css tasks
       buildother:
-        files: ['app/**', '!app/**/*.less', '!app/**/*.sass', '!app/**/*.scss']
-        tasks: ['lint', 'build:dev']
+        files: ['app/**/*.*', '!app/**/*.{less,sass,scss}']
+        tasks: ['build:dev']
       js:
         files: '<%= cfg.outdir.dev %>/**/*.js'
         tasks: ['livereload']
