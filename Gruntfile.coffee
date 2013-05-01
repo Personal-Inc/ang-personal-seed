@@ -83,6 +83,7 @@ module.exports = (grunt) ->
         files: [ 
           { expand: yes, cwd: 'app/font/', src: ['**'], dest: '<%= cfg.outdir.dev %>/font/' }
           { expand: yes, cwd: 'app/images/', src: ['**'], dest: '<%= cfg.outdir.dev %>/images/' }
+          { expand: yes, cwd: 'app/json/', src: ['**'], dest: '<%= cfg.outdir.dev %>/json/' }
         ]
       production:
         files: [
@@ -155,7 +156,7 @@ module.exports = (grunt) ->
           middleware: (connect, options) ->
             [folderMount(connect, "./#{cfg.outdir.prod}")]
 
-    regarde: #TODO: make this taks immune to errors in subtasks
+    regarde: #TODO: make this task immune to errors in subtasks, only rebuild changed components
       buildcss:
         files: ['app/**/*.{<%= const.cssexts %>}']
         tasks: ['less:development'] #TODO: add SASS, Compass, and copy css tasks
@@ -165,32 +166,50 @@ module.exports = (grunt) ->
       built:
         files: '<%= cfg.outdir.dev %>/**'
         tasks: ['livereload']
-      # js:
-      #   files: '<%= cfg.outdir.dev %>/**/*.js'
-      #   tasks: ['livereload']
-      # css:
-      #   files: '<%= cfg.outdir.dev %>/**/*.css'
-      #   tasks: ['livereload']
-      # html:
-      #   files: '<%= cfg.outdir.dev %>/**/*.html'
-      #   tasks: ['livereload']
 
 
-  ### Process Custom Watch Directories ###
-  currDirsCss = grunt.config 'regarde.buildcss.files'
-  currDirsOther = grunt.config 'regarde.buildother.files'
-  watchDirs = grunt.config 'cfg.watchdirs'
+  ### Process Custom Asset Directories ###
   cssExts = grunt.config 'const.cssexts'
-
-  if watchDirs?.length?
-    for dir in watchDirs 
-      currDirsCss.push "#{dir}/**/*.{#{cssExts}}"
-      currDirsOther.push "#{dir}/**/*.*"
-      currDirsOther.push "!#{dir}/**/*.{#{cssExts}}"
   
-  grunt.config 'regarde.buildcss.files', currDirsCss
-  grunt.config 'regarde.buildother.files', currDirsOther
+  cfgArr = [
+    'regarde.buildother.files'
+    'regarde.buildcss.files'
+    'coffeelint.app'
+    'jade.development.files'
+  ]
 
+  for own k,v of grunt.config 'coffee.development.files'
+    coffeeDevKey = "coffee.development.files.#{grunt.config.escape k}"
+  for own k,v of grunt.config 'coffee.production.files'
+    coffeeProdKey = "coffee.production.files.#{grunt.config.escape k}"
+  cfgArr.push coffeeDevKey
+  cfgArr.push coffeeProdKey
+
+  #TODO: LESS
+  #TODO: IMAGES
+  #TODO: COPY TASKS
+
+  cfgObj = {}
+  cfgObj[cfgName] = grunt.config cfgName for cfgName in cfgArr
+
+  if grunt.config('cfg.assetdirs')?.length?
+    for dir in grunt.config 'cfg.assetdirs'
+      cfgObj['regarde.buildcss.files'].push "#{dir}/**/*.{#{cssExts}}"
+      cfgObj['regarde.buildother.files'].push "#{dir}/**/*.*"
+      cfgObj['regarde.buildother.files'].push "!#{dir}/**/*.{#{cssExts}}"
+      cfgObj['coffeelint.app'].push "#{dir}/**/*.coffee"
+      cfgObj[coffeeDevKey].push "#{dir}/**/*.coffee"
+      cfgObj[coffeeProdKey].push "#{dir}/**/*.coffee"
+      cfgObj['jade.development.files'].push 
+        expand: yes
+        cwd: "#{dir}/"
+        src: ['**/*.jade']
+        dest: '<%= cfg.outdir.dev %>/'
+        ext: '.html'
+
+  
+  grunt.config cfgName, cfgVal for own cfgName, cfgVal of cfgObj
+  
   ### Vendor Tasks ###
   #Prep & Admin
   grunt.loadNpmTasks 'grunt-contrib-clean'
