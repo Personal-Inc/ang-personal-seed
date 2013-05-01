@@ -13,6 +13,8 @@ module.exports = (grunt) ->
     cfg: grunt.file.readYAML 'grunt-config.yml'
 
     clean:
+      options:
+        force: yes
       production: ['<%= cfg.outdir.prod %>']
 
     version:
