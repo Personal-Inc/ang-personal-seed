@@ -1,25 +1,29 @@
 .carousel3d {
   position: relative;
 
-  .left-trigger, .right-trigger {
-    width: 32px;
-    height: 320px;
-    border: 1px solid @appMuted;
-    z-index: 1000;
-    position: absolute;
-    top: 0;
-    left: 80px;
-  }
+  .trigger-view {
+    text-align: center;
 
-  .right-trigger {
-    left: 580px;
+    .left-trigger, .right-trigger {
+      width: 64px;
+      height: 32px;
+      margin: 0 128px;
+      display: inline-block;
+      background-color: @appMuted;
+      border: 1px solid @appMuted;
+      z-index: 1000;
+    }
+
+    .right-trigger {
+      
+    }
   }
 
   .sections-view {
     width: 410px;
-    height: 140px;
+    height: 200px;
     position: relative;
-    margin: 0 auto 40px;
+    margin: 0 auto 140px;
     -webkit-perspective: 200;
 
     .sections {
@@ -46,7 +50,7 @@
         background-color: @grayDark;
         color: @white;
         font-size: 48px;
-        opacity: 0.99;
+        opacity: 0.98;
       }
     }
   }
