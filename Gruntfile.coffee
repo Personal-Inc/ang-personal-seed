@@ -159,15 +159,18 @@ module.exports = (grunt) ->
       buildother:
         files: ['app/**/*.*', '!app/**/*.{less,sass,scss}']
         tasks: ['build:dev']
-      js:
-        files: '<%= cfg.outdir.dev %>/**/*.js'
+      built:
+        files: '<%= cfg.outdir.dev %>/**'
         tasks: ['livereload']
-      css:
-        files: '<%= cfg.outdir.dev %>/**/*.css'
-        tasks: ['livereload']
-      html:
-        files: '<%= cfg.outdir.dev %>/**/*.html'
-        tasks: ['livereload']
+      # js:
+      #   files: '<%= cfg.outdir.dev %>/**/*.js'
+      #   tasks: ['livereload']
+      # css:
+      #   files: '<%= cfg.outdir.dev %>/**/*.css'
+      #   tasks: ['livereload']
+      # html:
+      #   files: '<%= cfg.outdir.dev %>/**/*.html'
+      #   tasks: ['livereload']
 
 
   ### Vendor Tasks ###
