@@ -3,6 +3,8 @@ outdir: #output directory relative to Gruntfile
   dev: _dev_public
   prod: ../gh-pages
 
+watchdirs:
+
 src: #Order and location of source files
   js:
     vendor: 

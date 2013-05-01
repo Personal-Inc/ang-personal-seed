@@ -11,6 +11,8 @@ module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON 'package.json'
     cfg: grunt.file.readYAML 'grunt-config.yml'
+    const:
+      cssexts: 'less,sass,scss'
 
     clean:
       production: ['<%= cfg.outdir.prod %>']
@@ -155,10 +157,10 @@ module.exports = (grunt) ->
 
     regarde: #TODO: make this taks immune to errors in subtasks
       buildcss:
-        files: ['app/**/*.{less,sass,scss}']
+        files: ['app/**/*.{<%= const.cssexts %>}']
         tasks: ['less:development'] #TODO: add SASS, Compass, and copy css tasks
       buildother:
-        files: ['app/**/*.*', '!app/**/*.{less,sass,scss}']
+        files: ['app/**/*.*', '!app/**/*.{<%= const.cssexts %>}']
         tasks: ['build:dev']
       built:
         files: '<%= cfg.outdir.dev %>/**'
@@ -173,6 +175,21 @@ module.exports = (grunt) ->
       #   files: '<%= cfg.outdir.dev %>/**/*.html'
       #   tasks: ['livereload']
 
+
+  ### Process Custom Watch Directories ###
+  currDirsCss = grunt.config 'regarde.buildcss.files'
+  currDirsOther = grunt.config 'regarde.buildother.files'
+  watchDirs = grunt.config 'cfg.watchdirs'
+  cssExts = grunt.config 'const.cssexts'
+
+  if watchDirs?.length?
+    for dir in watchDirs 
+      currDirsCss.push "#{dir}/**/*.{#{cssExts}}"
+      currDirsOther.push "#{dir}/**/*.*"
+      currDirsOther.push "!#{dir}/**/*.{#{cssExts}}"
+  
+  grunt.config 'regarde.buildcss.files', currDirsCss
+  grunt.config 'regarde.buildother.files', currDirsOther
 
   ### Vendor Tasks ###
   #Prep & Admin
