@@ -13,9 +13,8 @@ module.exports = (grunt) ->
     cfg: grunt.file.readYAML 'grunt-config.yml'
 
     clean:
-      options:
-        force: yes
       production: ['<%= cfg.outdir.prod %>']
+      development: ['<%= cfg.outdir.dev %>']
 
     version:
       pkgfiles:
@@ -225,7 +224,6 @@ module.exports = (grunt) ->
   ]
   grunt.registerTask 'build:prod', [
     'lint'
-    'clean:production'
     'coffee:production'
     'less:production'
     'jade:production'
