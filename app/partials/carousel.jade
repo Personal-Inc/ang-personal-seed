@@ -1,0 +1,12 @@
+.carousel3d(ng-controller="CarouselCtrl")
+  .left-trigger(ng-click='decIdx()')
+    .trigger-icon &lt;
+  .sections-view
+    .sections(style='-webkit-transform: translateZ(-{{translateZ}}px) rotateY({{currIdx*-rotation}}deg)')
+      figure.section( ng-repeat='section in sections', 
+                style='-webkit-transform: rotateY({{section.rotateY}}deg) translateZ({{translateZ}}px)') {{section.template}}
+      //-.section( ng-repeat='section in sections', 
+                ng-include="'partials/'+section.template+'.html'",
+                style='-webkit-transform: rotateY({{section.rotateY}}deg) translateZ({{translateZ}}px)')
+  .right-trigger(ng-click='incIdx()')
+    .trigger-icon &gt;

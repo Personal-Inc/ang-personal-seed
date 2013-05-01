@@ -1,0 +1,53 @@
+.carousel3d {
+  position: relative;
+
+  .left-trigger, .right-trigger {
+    width: 32px;
+    height: 320px;
+    border: 1px solid @appMuted;
+    z-index: 1000;
+    position: absolute;
+    top: 0;
+    left: 80px;
+  }
+
+  .right-trigger {
+    left: 580px;
+  }
+
+  .sections-view {
+    width: 410px;
+    height: 140px;
+    position: relative;
+    margin: 0 auto 40px;
+    -webkit-perspective: 200;
+
+    .sections {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      -webkit-transform-style: preserve-3d;
+      .transitionAll(0.4s);
+
+      .section {
+        display: block;
+        position: absolute;
+        height: 320px;
+        line-height: 116px;
+        width: 386px;
+        left: 10px;
+        top: 10px;
+        margin: 0;
+
+        border: 2px solid @appAccent;
+        .border-radius(5px);
+        .transitionAll(0.4s);
+
+        background-color: @grayDark;
+        color: @white;
+        font-size: 48px;
+        opacity: 0.99;
+      }
+    }
+  }
+}

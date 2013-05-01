@@ -1,0 +1,155 @@
+//## MIXINS ##//
+.hover-invert(@pri, @sec, @delay) {
+    background-color: @pri;
+    color: @sec;
+    .transition(~'all @{delay} ease-in');
+    &:hover {
+        background-color: @sec;
+        color: @pri;
+    }
+}
+
+.any-button(@pri, @sec) {
+    cursor: pointer;
+
+    .border-radius(5px);
+    .hover-invert(@pri, @sec, 0.2s);
+
+    &[disabled] {
+        color: lighten(@pri,30%);
+        background: darken(@sec, 20%);
+        cursor: default;
+        cursor: no-drop;
+    }
+}
+
+.fuzzy-btn(@pri, @sec, @shadow) {
+    border: 0;
+    padding: 1px 2px;
+    list-style: none;
+    .box-shadow(0px 0px 5px @shadow);
+    .any-button(@pri, @sec);
+    i { margin-right: 6px; }
+}
+
+.ctrl-btn(@color) {
+    padding: 0px 5px;
+    .box-shadow(0px 0px 3px @ctrl-btn-shadow);
+    .any-button(@ctrl-btn-bg, @color);
+}
+
+.big-btn {
+    font-size: 2em;
+    padding: 0.3em;
+}
+
+.hidden-responsive(@max) {
+    @media(max-width: @max) {
+        display: none;
+    }
+}
+
+.hidden-mobile {
+    .hidden-responsive(630px);
+}
+
+.gradient-vert(@pri, @mid, @sec) {
+    background: @pri;
+    background: -moz-linear-gradient(top, @pri 0%, @mid 36%, @sec 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,@pri), color-stop(36%,@mid), color-stop(100%,@sec));
+    background: -webkit-linear-gradient(top, @pri 0%,@mid 36%,@sec 100%);
+    background: -o-linear-gradient(top, @pri 0%,@mid 36%,@sec 100%);
+    background: -ms-linear-gradient(top, @pri 0%,@mid 36%,@sec 100%);
+    background: linear-gradient(to bottom, @pri 0%,@mid 36%,@sec 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=~'@{pri}', endColorstr='~@{sec}',GradientType=0 );
+}
+
+//Button Groups
+.ctrl-btn-group {
+    list-style: none;
+}
+
+//Buttons
+.submit-input {
+    .fuzzy-btn(@blueDark, @white, @black);
+    .pull-right;
+}
+
+.delete-input {
+    .fuzzy-btn(@red, @white, @black);
+    margin-left: 10px;
+    .pull-right;
+}
+
+.cancel-input {
+    .fuzzy-btn(@red, @white, @black);
+    .pull-right;
+}
+
+.cancel-safe-input {
+    .fuzzy-btn(@blueDark, @white, @black);
+    .pull-right;
+}
+
+.signup-btn {
+    .fuzzy-btn(@orange, @white, @black);
+    .big-btn;
+    display: inline-block;
+}
+
+.add-file-btn {
+    .fuzzy-btn(@white, @orange, @gray);
+}
+
+
+
+
+
+//input magicks
+input[type=submit] {
+    width:0px;
+    height:0px;
+    padding: 0;
+    border: 0;
+}
+
+//icons
+.error-badge {
+    padding: 1px 3px;
+    .any-button(@white, @red);
+    .box-shadow(0 0 1px 1px @red);
+    cursor: help;
+}
+
+.error-popover {
+    .popover-title {
+        color: @white;
+        background-color: @red;
+        padding: 3px 14px;
+    }
+    .popover-content {
+        color: @red;
+        padding: 13px 14px;
+    }
+}
+
+
+//other general
+a:hover {
+    text-decoration: none;
+}
+
+//// 3D fx
+.three-d-group {
+    margin: 1em -3em;
+    -webkit-transform: perspective(600px) rotateY(60deg);// translateZ( 50px );
+    .transition(all 0.2s ease-in);
+    &:hover{
+        -webkit-transform: perspective(600px) rotateY(0deg);// translateZ( 50px );
+        margin: 1em;
+    }
+    &.editmode {
+        -webkit-transform: perspective(600px) rotateY(0deg);
+        margin: 1em;
+    }
+}

@@ -1,0 +1,50 @@
+.animation(@name, @duration, @iteration, @timing) {
+    -webkit-animation: @name @duration @iteration @timing; /* Safari 4+ */
+    -moz-animation:    @name @duration @iteration @timing; /* Fx 5+ */
+    -o-animation:      @name @duration @iteration @timing; /* Opera 12+ */
+    animation:         @name @duration @iteration @timing; /* IE */
+}
+
+.trans-rotate(@deg) {
+    transform: rotate(@deg);
+    -webkit-transform: rotate(@deg);
+    -moz-transform: rotate(@deg);
+    -o-transform: rotate(@deg);
+}
+
+.rotator-mixin {
+    0% {.trans-rotate(0deg);}
+    100% {.trans-rotate(1439deg);}
+}
+
+.pulsate-mixin {
+    1%, 99% {color: @red;}
+    16% {color: @orange;}
+    32% {color: @yellow;}
+    48% {color: @blue;}
+    64% {color: @indigo;}
+    80% {color: @violet;}
+}
+
+@-webkit-keyframes rotate_pulsate { .rotator-mixin; .pulsate-mixin; }
+@-moz-keyframes rotate_pulsate { .rotator-mixin; .pulsate-mixin; }
+@-ms-keyframes rotate_pulsate { .rotator-mixin; .pulsate-mixin; }
+@-o-keyframes rotate_pulsate { .rotator-mixin; .pulsate-mixin; }
+@keyframes rotate_pulsate { .rotator-mixin; .pulsate-mixin; }
+
+
+.icon-spinner {
+    .animation(rotate_pulsate, 8s, infinite, linear);
+}
+
+.transitionAll(@delay) {
+    .transition(~'all @{delay} ease-in');
+}
+
+.rotate3d(@x, @y, @z, @angle) {
+  -webkit-transform: rotate3d(@x, @y, @z, @angle);
+     -moz-transform: rotate3d(@x, @y, @z, @angle);
+      -ms-transform: rotate3d(@x, @y, @z, @angle);
+       -o-transform: rotate3d(@x, @y, @z, @angle);
+          transform: rotate3d(@x, @y, @z, @angle);
+}

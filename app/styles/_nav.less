@@ -1,0 +1,38 @@
+.navbar {
+    .navbar-inner{
+        background-image: none;
+        background-color: @white;
+        border-bottom: 1px solid @gray;
+    }
+
+    .nav > .active > a {/*stub*/}
+    .nav > li > a {/*stub*/}
+
+    .brand {
+        cursor: default;
+        padding: 5px 5px 5px 0;
+        margin: 12px 46px 12px 0;
+        //height: 44px;
+        
+        .brand-title {
+            color: @appAccent;
+            display: inline-block; 
+            font-size: 32px; 
+            //font-weight: bold; 
+        }
+        
+        .brand-subtitle {
+            color: @appContrast;
+            
+            &, & > * {
+                display: inline;
+            }
+
+            .subtitle-separator {
+                color: @appMuted;
+                font-size: 28px;
+                font-weight: bold; 
+            }
+        }
+    }
+}

@@ -1,0 +1,49 @@
+!!! 5
+html(lang='en', ng-controller='AppCtrl')
+  head
+    //- meta(charset='utf-8')
+    meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    meta(http-equiv='CACHE-CONTROL', content='NO-CACHE')
+    title(ng-bind-template='{{pageTitle}}')
+    link(rel='stylesheet', href='css/app-@@version.css')
+    
+    //if lte IE 7
+      script(src='js/json2.js')
+        <!--[if lte IE 8]>
+      script
+        document.createElement('ng-include');
+        document.createElement('ng-pluralize');
+        document.createElement('ng-view');
+ 
+        document.createElement('ng:include');
+        document.createElement('ng:pluralize');
+        document.createElement('ng:view');
+    //if lte IE 8
+      script(src='js/html5.js')
+  
+  body
+    .wrapper
+      .navbar.navbar-static-top
+        .navbar-inner
+          .container
+            span.brand 
+              .brand-title Gruntfile
+              .brand-subtitle 
+                .subtitle-separator [
+                .subtitle-text for Web Apps
+                .subtitle-separator ]
+      .container.main-content
+        div(ng-view)
+      .push
+
+    footer.footer
+      .container
+        p
+          small
+            span MIT License &copy; 2013
+
+    script(src='js/vendor-@@version.js')
+    script(src='js/app-@@version.js')
