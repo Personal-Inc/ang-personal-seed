@@ -8,6 +8,10 @@ App = angular.module('app', [
   'app.directives'
   'app.filters'
   'app.services'
+  'personal.controllers'
+  'personal.directives'
+  'personal.filters'
+  'personal.services'
 ])
 
 App.config([
@@ -18,13 +22,13 @@ App.config([
 
   $routeProvider
 
-    .when('/carousel', {templateUrl: 'partials/carousel.html'})
+    .when('/contacts', {templateUrl: 'partials/contacts.html'})
   #   .when('/career', {templateUrl: 'partials/career.html'})
   #   .when('/login-popup', {templateUrl: 'partials/login-popup.html'})
   #   .when(LOGIN_URL, {templateUrl: LOGIN_TEMPLATE})
 
   #   # Catch all
-    .otherwise({redirectTo: '/carousel'})
+    .otherwise({redirectTo: '/contacts'})
 
   # Without server side support html5 must be disabled.
   $locationProvider.html5Mode(false)

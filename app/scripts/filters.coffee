@@ -4,6 +4,12 @@
 
 angular.module('app.filters', [])
 
+.filter('avatarId', [
+ ()->
+  (contact)->
+   contact.id.split('#')[1]
+])
+
 .filter('interpolate', [
     'version',
 

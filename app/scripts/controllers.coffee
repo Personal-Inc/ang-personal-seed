@@ -36,44 +36,13 @@ angular.module('app.controllers', [])
     else
       return ''
 ])
-
-.controller('CarouselCtrl', [
+.controller('FunCtrl', [
   '$scope'
+  'Contact'
+  'Gem'
 
-($scope) ->
+($scope, Contact, Gem) ->
+ $scope.mycontacts = Contact.query()
+ $scope.mygems = Gem.query()
 
-  # Uses the url to determine if the selected
-  $scope.sections = [
-    template: 'intro'
-  ,
-    template: 'install'
-  ,
-    template: 'configure'
-  ,
-    template: '4'
-  ,
-    template: '5'
-  ,
-    template: '6'
-  ,
-    template: '7'
-  ,
-    template: '8'
-  ,
-    template: '9'
-  ]
-
-  rotation = 360 / $scope.sections.length
-  tz =  Math.round( ( 410 / 2 ) / Math.tan(Math.PI / $scope.sections.length) )
-
-  sec.rotateY = i * rotation for sec, i in $scope.sections
-  $scope.translateZ = tz
-  $scope.rotation = rotation
-  $scope.currIdx = 0
-
-  $scope.incIdx = ->
-    $scope.currIdx = $scope.currIdx + 1
-
-  $scope.decIdx = ->
-    $scope.currIdx = $scope.currIdx - 1
 ])

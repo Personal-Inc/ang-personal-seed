@@ -30,13 +30,10 @@ html(lang='en', ng-controller='AppCtrl')
         .navbar-inner
           .container
             span.brand 
-              .brand-title Gruntfile
-              .brand-subtitle 
-                .subtitle-separator [
-                .subtitle-text for Web Apps
-                .subtitle-separator ]
+              .brand-title SDK-Angular-Personal
       .container.main-content
-        div(ng-view)
+        div(ng-view, ng-show="prslSession.username")
+        div(ng-include="'partials/login.html'", ng-hide="prslSession.username")
       .push
 
     footer.footer

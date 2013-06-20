@@ -1,0 +1,38 @@
+div.login-app(ng-app='ng-app')
+  h3 Login
+  div(ng-controller='LoginCtrl')
+    form(ng-submit='login()')
+      p
+        label Email or Username
+        input(type='text', name='email', ng-model='email')
+      p
+        label Password
+        input(type='password', name='password', ng-model='password')
+      
+      .session-timeout
+        .question-btn(bs-popover='persist', rel='popover', data-content='To be safe, choose 20 minutes.<br/><br/>  If you are on a home or trusted computer it is okay to choose 24 hour. <br/><br/>Always remember to log out when you are done in your Personal Vault.', data-html='true', data-original-title='Which should I choose?', data-trigger='hover', data-placement='right')
+          i.icon-question-sign.icon
+        .title Stay logged in for:
+        ul.session-options
+          li.session-option.one-hr-session(ng-click='persist=false',  ng-class='{active: !persist, inactive: persist}')
+            span 20 Min
+          li.session-option.24-hr-session(ng-click='persist=true',  ng-class='{active: persist, inactive: !persist}')
+            span 24 Hours
+      
+      .captcha(ng-show='captcha.question')
+        .question-btn(bs-popover='persist', rel='popover', data-content='This "captcha" is a security mechanism to keep you safe.<br/><br/>  Simply answer the question or click "refresh" if you do not know it.', data-html='true', data-original-title='What is this?', data-trigger='hover', data-placement='right')
+          i.icon-question-sign.icon
+        .title Captcha
+        .refresh(ng-click="refreshCaptcha()")
+          i.icon-refresh
+          span Refresh
+        .captcha-question {{captcha.question}}
+        input.captcha-answer(type='text', ng-model='captcha.answer')
+
+      input(type='submit', value='something')
+      button.login-btn(type='button', ng-click='login()', ng-hide='loggingIn')
+        i.icon-ok-sign
+        span Login
+      i.icon-spinner.icon-spin(ng-show='loggingIn')
+      span.error-badge(bs-popover='error', ng-show='error', rel='popover', data-content='{{error}}', data-original-title='Snap!', data-trigger='hover', data-placement='left', bs-peek='true')
+        i.icon-warning-sign
