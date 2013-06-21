@@ -4,9 +4,7 @@ div#funstuff(ng-controller="FunCtrl")
 		input(type="text", ng-model="SearchTerm") // Defined Model (that is used in Filter)
 		ul
 			li(ng-repeat="contact in mycontacts | filter:SearchTerm").alert.alert-info.span2
-				ul
-					li(ng-repeat="gem in mygems | mineGem:contact")
-							{{gem.info.gem_instance_name}}
+				
 				div.row-fluid
 					div.span2.pull-left.imgfield 
 						img(src="https://demo.personal.com/avatar/{{contact | avatarId}}%23avatar?size=50")
@@ -21,3 +19,10 @@ div#funstuff(ng-controller="FunCtrl")
 							i.icon-phone-sign
 							i.icon-facebook-sign
 							i.icon-linkedin-sig
+						ul
+							li(ng-repeat="gem in mygems | mineGem:contact")
+									strong {{gem.info.gem_instance_name}}
+									br
+									ul
+										li(ng-repeat="gemData in gem.data")
+											{{gemData}}
