@@ -1,14 +1,29 @@
+// Form iwith new controller
+
+
+
+
 // Defined FunCtrl 
 div#funstuff(ng-controller="FunCtrl")
+	form#createAndShare(ng-controller="CreateAndShare", ng-submit='saveGem(gem)')
+		{{gem}}
+		form#gemInfo.hide
+			ul#fields(ng-repeat="gems in profileMap.0001")
+				ul
+					li(ng-repeat="field in gems") 
+						{{field.field_name}} 
+						input(type="text", name="{{field.field_id}}", id="{{field.field_id}}", ng-model='gem.data[field.field_id]')
+					input(type="submit", value="Submit", style="width:100px; height:20px;").btn.btn-small.btn-primary Save
+
 	div.funstuff
-		input(type="text", ng-model="SearchTerm") // Defined Model (that is used in Filter)
-		ul
-			li(ng-repeat="contact in mycontacts | filter:SearchTerm").alert.alert-info.span2
+		input(type="text", ng-model="SearchTerm", placeholder="Search your contacts") // Defined Model (that is used in Filter)
+		ul#contacts
+			li(ng-repeat="contact in mycontacts | filter:SearchTerm | orderBy:'metadata.email'").span2
 				
 				div.row-fluid
-					div.span2.pull-left.imgfield 
-						img(src="https://demo.personal.com/avatar/{{contact | avatarId}}%23avatar?size=50")
-					div.span10.pull-left 
+						
+						img(src="https://demo.personal.com/avatar/{{contact | avatarId}}%23avatar?size=120")
+						br
 						strong {{contact.metadata.email[0]}} 
 						br
 						small.muted +3976431231231
@@ -26,3 +41,56 @@ div#funstuff(ng-controller="FunCtrl")
 									ul
 										li(ng-repeat="gemData in gem.data")
 											{{gemData}}
+
+#contact-step-1.modal.hide.fade
+		.modal-header
+			button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+			h3 It’s easy to get started
+		.modal-body
+			h4	Enter the contact information you want to share
+			
+			.row-fluid
+				.span4.bigfont Username
+				.span8
+					input(type='text')
+			hr
+			.row-fluid
+				.span4.bigfont Email
+				.span8
+					input(type='text')
+			hr
+			.row-fluid
+				.span4.bigfont Title
+				.span8
+					input(type='text')
+			hr
+			.row-fluid
+				.span4.bigfont First Name
+				.span8
+					input(type='text')
+			hr
+			.row-fluid
+				.span4.bigfont Middle Name
+				.span8
+					input(type='text')
+			hr
+			.row-fluid
+				.span4.bigfont Last Name
+				.span8
+					input(type='text')
+			hr
+			.row-fluid
+				.span4.bigfont Suffix
+				.span8
+					input(type='text')
+			hr
+			.row-fluid
+				.span4.bigfont Nickname
+				.span8
+					input(type='text')
+			
+			center
+				a.btn.btn-info.continue-step-2(href='#') Continue
+			br
+			br
+			

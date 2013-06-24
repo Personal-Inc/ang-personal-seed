@@ -36,13 +36,32 @@ angular.module('app.controllers', [])
     else
       return ''
 ])
+
+
+.controller('CreateAndShare', [
+  '$scope'
+  'Gem'
+  'Schema'
+
+($scope, Gem, Schema) ->
+ Gem.query {temp_id:'0001'}, (gemList) ->
+   $scope.gemList = gemList
+   $scope.gem = gemList[0] if gemList.length > 0
+   $scope.gem = new Gem({}) if gemList.length == 0
+
+   $scope.saveGem = (gem) ->
+     gem.$save() unless gem.info.gem_instance_id?
+     gem.$update() if gem.info.gem_instance_id?
+])
 .controller('FunCtrl', [
   '$scope'
   'Contact'
   'Gem'
+  'Schema'
 
-($scope, Contact, Gem) ->
+($scope, Contact, Gem, Schema) ->
  $scope.mycontacts = Contact.query()
  $scope.mygems = Gem.query()
-
+ $scope.profileMap = Schema.getProfileMap()
+ 
 ])

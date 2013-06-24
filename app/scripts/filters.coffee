@@ -12,6 +12,8 @@ angular.module('app.filters', [])
 ])
 
 
+
+
 .filter('avatarId', [
  ()->
   (contact)->
