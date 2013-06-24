@@ -1,30 +1,51 @@
-// Form iwith new controller
 
-
-
+button.btn.btn-info(onclick="$('#createAndShare').modal('show')") Get Started
+br
+br
 
 // Defined FunCtrl 
 div#funstuff(ng-controller="FunCtrl")
-	form#createAndShare(ng-controller="CreateAndShare", ng-submit='saveGem(gem)')
-		{{gem}}
-		form#gemInfo.hide
-			ul#fields(ng-repeat="gems in profileMap.0001")
-				ul
-					li(ng-repeat="field in gems") 
-						{{field.field_name}} 
-						input(type="text", name="{{field.field_id}}", id="{{field.field_id}}", ng-model='gem.data[field.field_id]')
-					input(type="submit", value="Submit", style="width:100px; height:20px;").btn.btn-small.btn-primary Save
+	form#createAndShare(ng-controller="CreateAndShare", ng-submit='saveGem(gem)').modal.hide
+		div.modal-header
+			button.close('data-dismiss="modal", aria-hidden="true') &times;
+			h3 Fill Info and Share with your contacts {{alertInfo}}
+		div.modal-body
+			form#gemInfo.hide
+				ul#fields(ng-repeat="gems in profileMap.0001")
+					ul
+						li(ng-repeat="field in gems") 
+							div.row-fluid
+								div.span3 
+									{{field.field_name}} 
+								div.span9
+									input(type="text", name="{{field.field_id}}", id="{{field.field_id}}", ng-model='gem.data[field.field_id]')
+						//input(type="submit", value="Submit", style="width:100px; height:20px;").btn.btn-small.btn-primary Save
+
+			div.well
+				form.share(ng-submit='shareGem(gem, contacts)')
+					.share-title 
+						i.icon-lock
+						span &nbsp; Secure Share
+					br
+					br
+					.contacts
+						span.contact-label Email: 
+						span.contact-input
+						input(type="email", ng-model="contacts")
+						input.submit-input(type='submit', style="width:100px;height:20px;")
+						
+
 
 	div.funstuff
-		input(type="text", ng-model="SearchTerm", placeholder="Search your contacts") // Defined Model (that is used in Filter)
+		input(type="text", ng-model="SearchTerm", placeholder="Search your contacts").span12.searchbox // Defined Model (that is used in Filter)
 		ul#contacts
-			li(ng-repeat="contact in mycontacts | filter:SearchTerm | orderBy:'metadata.email'").span2
+			li.contactz(ng-repeat="contact in mycontacts | filter:SearchTerm | orderBy:'metadata.email'")
 				
-				div.row-fluid
+				div.row-fluid.makeitbeautiful
 						
-						img(src="https://demo.personal.com/avatar/{{contact | avatarId}}%23avatar?size=120")
+						img(src="https://demo.personal.com/avatar/{{contact | avatarId}}%23avatar?size=120", onclick="$('#m_{{contact.id.split('#')[1]}}').modal('show')")
 						br
-						strong {{contact.metadata.email[0]}} 
+						strong {{contact.metadata.email[0]}}
 						br
 						small.muted +3976431231231
 						br
@@ -34,14 +55,16 @@ div#funstuff(ng-controller="FunCtrl")
 							i.icon-phone-sign
 							i.icon-facebook-sign
 							i.icon-linkedin-sig
-						ul
-							li(ng-repeat="gem in mygems | mineGem:contact")
-									strong {{gem.info.gem_instance_name}}
-									br
-									ul
-										li(ng-repeat="gemData in gem.data")
-											{{gemData}}
-
+						div.modal(id="m_{{contact.id.split('#')[1]}}").hide
+							div.modal-body
+								ul
+									li(ng-repeat="gem in mygems | mineGem:contact")
+											strong {{gem.info.gem_instance_name}}
+											br
+											ul
+												li(ng-repeat="gemData in gem.data")
+													{{gemData}}
+												br
 #contact-step-1.modal.hide.fade
 		.modal-header
 			button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
