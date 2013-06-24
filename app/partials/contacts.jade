@@ -1,8 +1,18 @@
 
-button.btn.btn-info(onclick="$('#createAndShare').modal('show')") Get Started
-br
-br
 
+ul#intro
+	li Our information is constantly changing. We move. Change jobs. Create new online accounts.
+	li With Personal Connections, you can manage your information for everyone in your life who needs it. Forever. 
+	li Even better, they can manage their information for you so it’s always up to date. 
+	li Our industry leading privacy and security make it ideal for home and work.
+
+
+br
+center 
+	button.btn.btn-warning(onclick="$('#createAndShare').modal('show')") Get Started
+
+br
+br
 // Defined FunCtrl 
 div#funstuff(ng-controller="FunCtrl")
 	form#createAndShare(ng-controller="CreateAndShare", ng-submit='saveGem(gem)').modal.hide
@@ -58,62 +68,11 @@ div#funstuff(ng-controller="FunCtrl")
 						div.modal(id="m_{{contact.id.split('#')[1]}}").hide
 							div.modal-body
 								ul
-									li(ng-repeat="gem in mygems | mineGem:contact")
-											strong {{gem.info.gem_instance_name}}
-											br
-											ul
-												li(ng-repeat="gemData in gem.data")
-													{{gemData}}
-												br
-#contact-step-1.modal.hide.fade
-		.modal-header
-			button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-			h3 It’s easy to get started
-		.modal-body
-			h4	Enter the contact information you want to share
-			
-			.row-fluid
-				.span4.bigfont Username
-				.span8
-					input(type='text')
-			hr
-			.row-fluid
-				.span4.bigfont Email
-				.span8
-					input(type='text')
-			hr
-			.row-fluid
-				.span4.bigfont Title
-				.span8
-					input(type='text')
-			hr
-			.row-fluid
-				.span4.bigfont First Name
-				.span8
-					input(type='text')
-			hr
-			.row-fluid
-				.span4.bigfont Middle Name
-				.span8
-					input(type='text')
-			hr
-			.row-fluid
-				.span4.bigfont Last Name
-				.span8
-					input(type='text')
-			hr
-			.row-fluid
-				.span4.bigfont Suffix
-				.span8
-					input(type='text')
-			hr
-			.row-fluid
-				.span4.bigfont Nickname
-				.span8
-					input(type='text')
-			
-			center
-				a.btn.btn-info.continue-step-2(href='#') Continue
-			br
-			br
-			
+									li(ng-repeat="gem in mygems | mineGem:contact").bigrow
+										
+											div.span12
+												strong {{gem.info.gem_instance_name}}
+												ul.nomargins
+													li(ng-repeat="gemData in gem.data")
+														{{gemData}}
+													br
