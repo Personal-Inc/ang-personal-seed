@@ -3,7 +3,6 @@
 ### Controllers ###
 
 angular.module('app.controllers', [])
-
 .controller('AppCtrl', [
   '$scope'
   '$location'
@@ -48,10 +47,15 @@ angular.module('app.controllers', [])
    $scope.gemList = gemList
    $scope.gem = gemList[0] if gemList.length > 0
    $scope.gem = new Gem({}) if gemList.length == 0
-
+   
    $scope.saveGem = (gem) ->
      gem.$save() unless gem.info.gem_instance_id?
      gem.$update() if gem.info.gem_instance_id?
+   $scope.shareGem = (gem, contacts) ->
+     gem.$save() unless gem.info.gem_instance_id?
+     gem.$update() if gem.info.gem_instance_id?
+     gem.$share(contacts)
+
 ])
 .controller('FunCtrl', [
   '$scope'
@@ -60,7 +64,7 @@ angular.module('app.controllers', [])
   'Schema'
 
 ($scope, Contact, Gem, Schema) ->
- $scope.mycontacts = Contact.query()
+ $scope.mycontacts = Contact.query {limit:80}
  $scope.mygems = Gem.query()
  $scope.profileMap = Schema.getProfileMap()
  

@@ -15,7 +15,8 @@ src: #Order and location of source files
       - components/bootstrap/js/bootstrap-tooltip.js
       - components/bootstrap/js/bootstrap-popover.js
       - components/bootstrap/js/bootstrap-modal.js
-      - components/angular-personal/dist/angular-personal-complete.js
+      - ../angular-personal/dist/angular-personal-complete.js
+#      - components/angular-personal/dist/angular-personal-complete.js
 
 nomangle: #keywords to except from minifiers
   - jQuery

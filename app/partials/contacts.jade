@@ -15,7 +15,7 @@ br
 br
 // Defined FunCtrl 
 div#funstuff(ng-controller="FunCtrl")
-	form#createAndShare(ng-controller="CreateAndShare", ng-submit='saveGem(gem)').modal.hide
+	form#createAndShare(ng-controller="CreateAndShare", ng-submit='saveGem(gem)').modal
 		div.modal-header
 			button.close('data-dismiss="modal", aria-hidden="true') &times;
 			h3 Fill Info and Share with your contacts {{alertInfo}}
@@ -34,13 +34,6 @@ div#funstuff(ng-controller="FunCtrl")
 			div.well
 				form.share(ng-submit='shareGem(gem, contacts)')
 					.share-title 
-						i.icon-lock
-						span &nbsp; Secure Share
-					br
-					br
-					.contacts
-						span.contact-label Email: 
-						span.contact-input
 						input(type="email", ng-model="contacts")
 						input.submit-input(type='submit', style="width:100px;height:20px;")
 						
