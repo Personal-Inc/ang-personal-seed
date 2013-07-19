@@ -37,6 +37,17 @@ angular.module('app.controllers', [])
 ])
 
 
+.controller('FunOgi', [
+  '$scope'
+  'Contact'
+
+($scope, Contact) ->
+  $scope.contacts = Contact.query {limit:80}
+  $scope.saveOgi = (contact) ->
+    console.log(contact)
+    #contact.$save()
+])
+
 .controller('CreateAndShare', [
   '$scope'
   'Gem'
