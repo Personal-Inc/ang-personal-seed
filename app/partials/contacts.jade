@@ -1,12 +1,25 @@
-div#ogi(ng-controller="FunOgi")
-	input(ng-model="search")
-	//{{contacts}}
-	ul#repeat
-		li(ng-repeat="contact in contacts")
-			form(ng-submit='saveOgi(contact)')
-				input(ng-model='contact.metadata.email', value="{{contact.metadata.email}}")
-				input(ng-model='contact.metadata.name', value="{{contact.metadata.name}}")
+div#main.row-fluid.boxes
+	div#contacts-ogi.well.span5(ng-controller="FunOgi")
+		div.title Contacts
+		br
+		input(ng-model="search")
+		br
+		br
+		//{{contacts}}
+		ul#repeat
+			li(ng-repeat="contact in contacts | filter:search")
+				{{contact.metadata.email[0]}} - {{contact.metadata.name[0]}}
 				br
+	div#gems.well.span5(ng-controller="FunOgi2")
+		div.title Gems
+		br
+		input(ng-model="search")
+		//{{gems}}
+		br
+		br
+		ul#repeat
+			li(ng-repeat="gem in gems | filter:search")
+				//{{gem}}
+				{{gem.info.gem_instance_name}}
+				a(ng-click="getDetails(gem)") View Details
 				br
-				br
-				input(class="btn btn-primary",type="submit",style="width:100px; height:30px;", value="SAVE")

@@ -48,6 +48,16 @@ angular.module('app.controllers', [])
     #contact.$save()
 ])
 
+.controller('FunOgi2', [
+  '$scope'
+  'Gem'
+
+($scope, Gem) ->
+  $scope.gems = Gem.query {limit:80}
+  $scope.getDetails = (gem) ->
+    console.log(gem)
+])
+
 .controller('CreateAndShare', [
   '$scope'
   'Gem'
