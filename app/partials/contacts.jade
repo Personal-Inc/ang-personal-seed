@@ -21,5 +21,6 @@ div#main.row-fluid.boxes
 			li(ng-repeat="gem in gems | filter:search")
 				//{{gem}}
 				{{gem.info.gem_instance_name}}
-				a(ng-click="getDetails(gem)") View Details
+				button(type="button", class="btn", bs-modal="'partials/modal.html'")
+				//a(ng-click="getDetails(gem)") View Details
 				br

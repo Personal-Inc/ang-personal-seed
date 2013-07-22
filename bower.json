@@ -8,6 +8,7 @@
     "angular": "~1.0.5",
     "angular-resource": "~1.0.5",
     "angular-cookies": "~1.0.5",
-    "angular-personal": "git@github.com:Personal-Inc/angular-personal.git#~1.2.2"
+    "angular-personal": "git@github.com:Personal-Inc/angular-personal.git#~1.2.2",
+    "angular-strap": "git@github.com:mgcrea/angular-strap.git"
   }
 }

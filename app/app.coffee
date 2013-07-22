@@ -12,6 +12,7 @@ App = angular.module('app', [
   'personal.directives'
   'personal.filters'
   'personal.services'
+  '$strap'
 ])
 
 App.config([
